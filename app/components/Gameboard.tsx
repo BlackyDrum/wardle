@@ -26,7 +26,9 @@ export default function Gameboard() {
 
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
-      setCurrentWord((currentWord) => currentWord + e.key);
+      if (e.key.match(/[a-z]/i)) {
+        setCurrentWord((prevWord) => prevWord + e.key);
+      }
     };
 
     document.addEventListener("keydown", handleKeyDown);
@@ -39,10 +41,12 @@ export default function Gameboard() {
   useEffect(() => {
     if (currentWord.length === 5) {
       axios
-        .get(`https://api.infinitewords.uk/api/guess/${currentWord}`)
-        .then((data) => {})
+        .get(`/api/words?word=${currentWord}`)
+        .then((response) => {
+          setApiData(response.data);
+        })
         .catch((error) => {})
-        .then(() => {
+        .finally(() => {
           setCurrentRow((currentRow) => currentRow + 1);
           setCurrentWord("");
         });
@@ -53,7 +57,6 @@ export default function Gameboard() {
 
   return (
     <div className="flex">
-      {apiData}
       <div className="mx-auto mt-6">
         {rows.map((row, index) => (
           <div key={index}>{row}</div>
