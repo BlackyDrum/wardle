@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 import BoardRow from "./BoardRow";
+import axios from "axios";
 
 function createBoard(currentWord: string, currentRow: number) {
   let rows = [];
@@ -21,6 +22,8 @@ export default function Gameboard() {
 
   const [currentRow, setCurrentRow] = useState(0);
 
+  const [apiData, setApiData] = useState(null);
+
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
       setCurrentWord((currentWord) => currentWord + e.key);
@@ -35,8 +38,14 @@ export default function Gameboard() {
 
   useEffect(() => {
     if (currentWord.length === 5) {
-      setCurrentRow((currentRow) => currentRow + 1);
-      setCurrentWord("");
+      axios
+        .get(`https://api.infinitewords.uk/api/guess/${currentWord}`)
+        .then((data) => {})
+        .catch((error) => {})
+        .then(() => {
+          setCurrentRow((currentRow) => currentRow + 1);
+          setCurrentWord("");
+        });
     }
   }, [currentWord]);
 
@@ -44,6 +53,7 @@ export default function Gameboard() {
 
   return (
     <div className="flex">
+      {apiData}
       <div className="mx-auto mt-6">
         {rows.map((row, index) => (
           <div key={index}>{row}</div>
