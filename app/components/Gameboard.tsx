@@ -1,11 +1,14 @@
+"use client";
+
+import { useEffect, useState } from "react";
 import BoardRow from "./BoardRow";
 
-function createBoard() {
+function createBoard(currentWord: string, currentRow: number) {
   let rows = [];
   for (let i = 0; i < 6; i++) {
     rows.push(
       <div>
-        <BoardRow />
+        <BoardRow word={currentWord} row={currentRow} cellRow={i} />
       </div>
     );
   }
@@ -14,7 +17,31 @@ function createBoard() {
 }
 
 export default function Gameboard() {
-  let rows = createBoard();
+  const [currentWord, setCurrentWord] = useState("");
+
+  const [currentRow, setCurrentRow] = useState(0);
+
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      setCurrentWord((currentWord) => currentWord + e.key);
+    };
+
+    document.addEventListener("keydown", handleKeyDown);
+
+    return () => {
+      document.removeEventListener("keydown", handleKeyDown);
+    };
+  }, [currentWord, currentRow]);
+
+  useEffect(() => {
+    if (currentWord.length === 5) {
+      setCurrentRow((currentRow) => currentRow + 1);
+      setCurrentWord("");
+    }
+  }, [currentWord]);
+
+  let rows = createBoard(currentWord, currentRow);
+
   return (
     <div className="flex">
       <div className="mx-auto mt-6">
