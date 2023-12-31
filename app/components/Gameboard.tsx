@@ -47,7 +47,10 @@ export default function Gameboard() {
         .then((response) => {
           setApiData(response.data);
         })
-        .catch((error) => {})
+        .catch((error) => {
+          setCurrentRow((currentRow) => currentRow - 1);
+          setCurrentWord("");
+        })
         .finally(() => {
           setCurrentRow((currentRow) => currentRow + 1);
           setCurrentWord("");

@@ -32,9 +32,10 @@ async function readFile(path: string) {
   return data;
 }
 
-function createResponse(response: WordGuessData) {
+function createResponse(response: WordGuessData, status = 200) {
   return new Response(JSON.stringify(response), {
     headers: { "content-type": "application/json" },
+    status,
   });
 }
 
@@ -64,12 +65,12 @@ export async function GET(request: Request) {
 
   if (userWord.length !== 5) {
     response.message = "Word must be 5 letters long!";
-    return createResponse(response);
+    return createResponse(response, 400);
   }
 
   if (!wordList.includes(userWord)) {
     response.message = "Word is not in the wordlist!";
-    return createResponse(response);
+    return createResponse(response, 400);
   }
 
   response.validGuess = true;
