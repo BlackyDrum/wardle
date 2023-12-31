@@ -9,3 +9,8 @@
 .green {
   background-color: #538d4e;
 }
+
+.enlarged {
+  transform: scale(1.2);
+  transition: transform 0.1s ease-in-out;
+}

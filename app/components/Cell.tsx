@@ -12,12 +12,30 @@ export default function Cell(props: {
   col: number;
 }) {
   const [char, setChar] = useState("");
-
   const [color, setColor] = useState("");
+  const [enlarged, setEnlarged] = useState(false);
+  const [hasMounted, setHasMounted] = useState(false);
+
+  useEffect(() => {
+    setHasMounted(true);
+
+    return () => setHasMounted(false);
+  }, []);
 
   useEffect(() => {
     if (props.activeRow === props.cellRow) {
       setChar(props.char);
+      if (hasMounted && typeof props.char === "string") {
+        setEnlarged(true);
+        const timeoutId = setTimeout(() => {
+          setEnlarged(false);
+        }, 100);
+
+        return () => {
+          clearTimeout(timeoutId);
+          setEnlarged(false);
+        };
+      }
     }
   }, [props.activeRow, props.cellRow, props.char, props.col]);
 
@@ -31,7 +49,7 @@ export default function Cell(props: {
 
   return (
     <div
-      className={`flex m-1 w-16 h-16 text-3xl ${
+      className={`flex m-1 w-16 h-16 text-3xl ${enlarged ? styles.enlarged : ""} ${
         styles[color] || "blank"
       } border-app-gray border-2`}>
       <div className="m-auto font-bold">{char}</div>
