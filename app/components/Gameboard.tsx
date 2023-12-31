@@ -25,16 +25,16 @@ export default function Gameboard() {
   const [apiData, setApiData] = useState(null);
 
   useEffect(() => {
-    const handleKeyDown = (e: KeyboardEvent) => {
+    const handleKeyUp = (e: KeyboardEvent) => {
       if (e.key.match(/[a-z]/i)) {
         setCurrentWord((prevWord) => prevWord + e.key);
       }
     };
 
-    document.addEventListener("keydown", handleKeyDown);
+    document.addEventListener("keyup", handleKeyUp);
 
     return () => {
-      document.removeEventListener("keydown", handleKeyDown);
+      document.removeEventListener("keyup", handleKeyUp);
     };
   }, [currentWord, currentRow]);
 
