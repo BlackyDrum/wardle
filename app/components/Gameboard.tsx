@@ -27,7 +27,9 @@ export default function Gameboard() {
   const [apiData, setApiData] = useState<WordGuessData | null>(null);
 
   const handleKeyUp = (e: KeyboardEvent) => {
-    if (e.key.match(/[a-z]/i)) {
+    if (e.key === "Backspace") {
+      setCurrentWord((prevWord) => prevWord.slice(0, -1));
+    } else if (e.key.match(/[a-z]/i)) {
       setCurrentWord((prevWord) => prevWord + e.key);
     }
   };
