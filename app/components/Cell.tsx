@@ -37,7 +37,7 @@ export default function Cell(props: {
         };
       }
     }
-  }, [props.activeRow, props.cellRow, props.char, props.col]);
+  }, [props.activeRow, props.cellRow, props.char, props.col, hasMounted]);
 
   useEffect(() => {
     if (props.activeRow - 1 === props.cellRow) {
