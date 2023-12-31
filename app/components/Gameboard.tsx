@@ -4,12 +4,14 @@ import { useEffect, useState } from "react";
 import BoardRow from "./BoardRow";
 import axios from "axios";
 
-function createBoard(currentWord: string, currentRow: number) {
+import { WordGuessData } from "../api/words/route";
+
+function createBoard(currentWord: string, currentRow: number, data: WordGuessData | null) {
   let rows = [];
   for (let i = 0; i < 6; i++) {
     rows.push(
       <div>
-        <BoardRow word={currentWord} row={currentRow} cellRow={i} />
+        <BoardRow word={currentWord} row={currentRow} cellRow={i} data={data} />
       </div>
     );
   }
@@ -22,7 +24,7 @@ export default function Gameboard() {
 
   const [currentRow, setCurrentRow] = useState(0);
 
-  const [apiData, setApiData] = useState(null);
+  const [apiData, setApiData] = useState<WordGuessData | null>(null);
 
   const handleKeyUp = (e: KeyboardEvent) => {
     if (e.key.match(/[a-z]/i)) {
@@ -53,7 +55,7 @@ export default function Gameboard() {
     }
   }, [currentWord]);
 
-  let rows = createBoard(currentWord, currentRow);
+  let rows = createBoard(currentWord, currentRow, apiData);
 
   return (
     <div className="flex">

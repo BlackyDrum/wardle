@@ -10,10 +10,10 @@ interface WordDataProps {
 interface WordGuessResult {
   index: number;
   letter: string;
-  color: string;
+  color: BackgroundColor;
 }
 
-interface WordGuessData {
+export interface WordGuessData {
   guess: string;
   correctWord: boolean;
   wordLength: number;
@@ -22,6 +22,8 @@ interface WordGuessData {
   keyBoard?: Record<string, string>;
   message?: string;
 }
+
+type BackgroundColor = "gray" | "yellow" | "green"; // gray, yellow, green
 
 async function readFile(path: string) {
   const file = await fs.readFile(process.cwd() + path);
