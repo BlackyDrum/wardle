@@ -24,19 +24,19 @@ export default function Gameboard() {
 
   const [apiData, setApiData] = useState(null);
 
-  useEffect(() => {
-    const handleKeyUp = (e: KeyboardEvent) => {
-      if (e.key.match(/[a-z]/i)) {
-        setCurrentWord((prevWord) => prevWord + e.key);
-      }
-    };
+  const handleKeyUp = (e: KeyboardEvent) => {
+    if (e.key.match(/[a-z]/i)) {
+      setCurrentWord((prevWord) => prevWord + e.key);
+    }
+  };
 
+  useEffect(() => {
     document.addEventListener("keyup", handleKeyUp);
 
     return () => {
       document.removeEventListener("keyup", handleKeyUp);
     };
-  }, [currentWord, currentRow]);
+  }, []);
 
   useEffect(() => {
     if (currentWord.length === 5) {
