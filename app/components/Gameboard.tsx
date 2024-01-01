@@ -5,6 +5,7 @@ import BoardRow from "./BoardRow";
 import axios from "axios";
 
 import { WordGuessData } from "../api/words/route";
+import VirtualKeyboard from "./Keyboard/VirtualKeyboard";
 
 function createBoard(currentWord: string, currentRow: number, data: WordGuessData | null) {
   let rows = [];
@@ -34,6 +35,14 @@ export default function Gameboard() {
     }
   };
 
+  const handleClick = (value: string) => {
+    if (value === "<--") {
+      setCurrentWord((prevWord) => prevWord.slice(0, -1));
+    } else {
+      setCurrentWord((prevWord) => prevWord + value);
+    }
+  };
+
   useEffect(() => {
     document.addEventListener("keyup", handleKeyUp);
 
@@ -45,7 +54,7 @@ export default function Gameboard() {
   useEffect(() => {
     if (currentWord.length === 5) {
       axios
-        .get(`/api/words?word=${currentWord}`)
+        .get(`/api/words?word=${currentWord.toLowerCase()}`)
         .then((response) => {
           setApiData(response.data);
         })
@@ -63,12 +72,15 @@ export default function Gameboard() {
   let rows = createBoard(currentWord, currentRow, apiData);
 
   return (
-    <div className="flex">
-      <div className="mx-auto mt-6">
-        {rows.map((row, index) => (
-          <div key={index}>{row}</div>
-        ))}
+    <div>
+      <div className="flex">
+        <div className="mx-auto mt-6">
+          {rows.map((row, index) => (
+            <div key={index}>{row}</div>
+          ))}
+        </div>
       </div>
+      <VirtualKeyboard handleClick={handleClick} />
     </div>
   );
 }

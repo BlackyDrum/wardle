@@ -52,8 +52,8 @@ export async function GET(request: Request) {
 
   data = await readFile(filepath);
 
-  let userWord = request.url.slice(request.url.lastIndexOf("=") + 1);
-  let correctWord = data.word;
+  let userWord = request.url.slice(request.url.lastIndexOf("=") + 1).toLowerCase();
+  let correctWord = data.word.toLowerCase();
 
   let response: WordGuessData = {
     guess: userWord,
