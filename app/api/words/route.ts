@@ -19,7 +19,7 @@ export interface WordGuessData {
   wordLength: number;
   validGuess: boolean;
   result: WordGuessResult[];
-  keyBoard?: Record<string, string>;
+  keyBoard?: Record<string, string>[];
   message?: string;
 }
 
@@ -61,6 +61,7 @@ export async function GET(request: Request) {
     validGuess: false,
     wordLength: userWord.length,
     result: [],
+    keyBoard: [],
   };
 
   if (userWord.length !== 5) {
@@ -85,11 +86,14 @@ export async function GET(request: Request) {
 
     if (userWord[i] === correctWord[i]) {
       r.color = "green";
+      response.keyBoard?.push({ [userWord[i]]: "green" });
     } else if (correctWord.includes(userWord[i])) {
       r.color = "yellow";
+      response.keyBoard?.push({ [userWord[i]]: "yellow" });
       corretGuess = false;
     } else {
       corretGuess = false;
+      response.keyBoard?.push({ [userWord[i]]: "gray" });
     }
 
     response.result.push(r);

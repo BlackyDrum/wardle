@@ -86,7 +86,7 @@ export default function Gameboard() {
           ))}
         </div>
       </div>
-      <VirtualKeyboard handleClick={handleClick} />
+      <VirtualKeyboard handleClick={handleClick} data={apiData} />
     </div>
   );
 }
