@@ -1,7 +1,7 @@
 import { PrefixPathnameNormalizer } from "next/dist/server/future/normalizers/request/prefix";
-import Cell from "./Cell";
+import Cell from "../Cell/Cell";
 
-import { WordGuessData } from "../api/words/route";
+import { WordGuessData } from "../../../api/words/route";
 
 function createCells(word: string, activeRow: number, cellRow: number, data: WordGuessData | null) {
   let cells = [];

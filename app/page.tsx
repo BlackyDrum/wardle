@@ -1,4 +1,4 @@
-import Gameboard from "./components/Gameboard";
+import Gameboard from "./components/Grid/Gameboard";
 import Header from "./components/Header";
 
 export default function Home() {

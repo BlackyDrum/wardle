@@ -1,11 +1,11 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import BoardRow from "./BoardRow";
+import BoardRow from "./Row/BoardRow";
 import axios from "axios";
 
-import { WordGuessData } from "../api/words/route";
-import VirtualKeyboard from "./Keyboard/VirtualKeyboard";
+import { WordGuessData } from "../../api/words/route";
+import VirtualKeyboard from "../Keyboard/VirtualKeyboard";
 
 function createBoard(currentWord: string, currentRow: number, data: WordGuessData | null) {
   let rows = [];

@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 
-import { WordGuessData } from "../api/words/route";
+import { WordGuessData } from "../../../api/words/route";
 
 import styles from "./cell.module.css";
 
