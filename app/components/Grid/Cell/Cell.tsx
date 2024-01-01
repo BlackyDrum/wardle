@@ -30,7 +30,7 @@ export default function Cell(props: {
         setEnlarged(true);
         const timeoutId = setTimeout(() => {
           setEnlarged(false);
-        }, 100);
+        }, 50);
 
         return () => {
           clearTimeout(timeoutId);
