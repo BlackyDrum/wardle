@@ -14,6 +14,7 @@ export default function Cell(props: {
   const [char, setChar] = useState("");
   const [color, setColor] = useState("");
   const [enlarged, setEnlarged] = useState(false);
+  const [spin, setSpin] = useState(false);
   const [hasMounted, setHasMounted] = useState(false);
 
   useEffect(() => {
@@ -47,11 +48,17 @@ export default function Cell(props: {
     }
   }, [props.activeRow, props.cellRow, props.col, props.data]);
 
+  useEffect(() => {
+    if (props.data && props.data.result.length !== 0 && props.activeRow - 1 === props.cellRow) {
+      setSpin(true);
+    }
+  }, [props.data, props.activeRow, props.cellRow]);
+
   return (
     <div
-      className={`flex m-1 w-16 h-16 text-3xl ${enlarged ? styles.enlarged : ""} ${
-        styles[color] || "blank"
-      } border-app-gray border-2`}>
+      className={`flex m-1 ${spin ? styles.spinAnimation : ""} w-16 h-16 text-3xl ${
+        enlarged ? styles.enlarged : ""
+      } ${styles[color] || "blank"} border-app-gray border-2`}>
       <div className="m-auto font-bold">{char}</div>
     </div>
   );

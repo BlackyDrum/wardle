@@ -14,3 +14,18 @@
   transform: scale(1.2);
   transition: transform 0.1s ease-in-out;
 }
+
+@keyframes spin {
+  from {
+    transform: rotateX(180deg);
+  }
+  to {
+    transform: rotateX(0deg);
+  }
+}
+
+.spinAnimation {
+  animation: spin 0.5s linear;
+  border: 0;
+  backface-visibility: hidden;
+}
