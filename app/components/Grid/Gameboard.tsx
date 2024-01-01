@@ -32,7 +32,7 @@ export default function Gameboard() {
   const handleKeyUp = (e: KeyboardEvent) => {
     if (e.key === "Backspace") {
       setCurrentWord((prevWord) => prevWord.slice(0, -1));
-    } else if (e.key.match(/[a-z]/i)) {
+    } else if (e.key.match(/[a-z]/i) && e.key.length === 1) {
       setCurrentWord((prevWord) => prevWord + e.key);
     }
   };
@@ -40,7 +40,7 @@ export default function Gameboard() {
   const handleClick = (value: string) => {
     if (value === "<--") {
       setCurrentWord((prevWord) => prevWord.slice(0, -1));
-    } else {
+    } else if (value.match(/[a-z]/i) && value.length === 1) {
       setCurrentWord((prevWord) => prevWord + value);
     }
   };
