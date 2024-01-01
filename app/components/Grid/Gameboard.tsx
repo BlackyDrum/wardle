@@ -4,6 +4,8 @@ import { useEffect, useState } from "react";
 import BoardRow from "./Row/BoardRow";
 import axios from "axios";
 
+import { Notify } from "notiflix/build/notiflix-notify-aio";
+
 import { WordGuessData } from "../../api/words/route";
 import VirtualKeyboard from "../Keyboard/VirtualKeyboard";
 
@@ -61,6 +63,10 @@ export default function Gameboard() {
         .catch((error) => {
           setCurrentRow((currentRow) => currentRow - 1);
           setCurrentWord("");
+
+          Notify.failure(error.response.data.message, {
+            timeout: 6000,
+          });
         })
         .finally(() => {
           setCurrentRow((currentRow) => currentRow + 1);
