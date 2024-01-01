@@ -69,7 +69,7 @@ export async function GET(request: Request) {
   }
 
   if (!wordList.includes(userWord)) {
-    response.message = "Word is not in the wordlist!";
+    response.message = `'${userWord}' is not in the wordlist!`;
     return createResponse(response, 400);
   }
 
