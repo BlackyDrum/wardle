@@ -23,7 +23,7 @@ export interface WordGuessData {
   message?: string;
 }
 
-type BackgroundColor = "gray" | "yellow" | "green"; // gray, yellow, green
+type BackgroundColor = "gray" | "yellow" | "green";
 
 async function readFile(path: string) {
   const file = await fs.readFile(process.cwd() + path);
