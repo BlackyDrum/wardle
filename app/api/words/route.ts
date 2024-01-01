@@ -19,7 +19,6 @@ export interface WordGuessData {
   wordLength: number;
   validGuess: boolean;
   result: WordGuessResult[];
-  keyBoard?: Record<string, string>[];
   message?: string;
 }
 
@@ -61,7 +60,6 @@ export async function GET(request: Request) {
     validGuess: false,
     wordLength: userWord.length,
     result: [],
-    keyBoard: [],
   };
 
   if (userWord.length !== 5) {
@@ -76,6 +74,22 @@ export async function GET(request: Request) {
 
   response.validGuess = true;
 
+  interface DuplicateTrack {
+    letter: string;
+    count: number;
+  }
+
+  let duplicateInWord: DuplicateTrack[] = [];
+  for (let i = 0; i < correctWord.length; i++) {
+    if (duplicateInWord.find((d) => d.letter === correctWord[i])) continue;
+    duplicateInWord.push({ letter: correctWord[i], count: 1 });
+    for (let j = i + 1; j < correctWord.length; j++) {
+      if (correctWord[i] === correctWord[j]) {
+        duplicateInWord[i].count++;
+      }
+    }
+  }
+
   let corretGuess = true;
   for (let i = 0; i < userWord.length; i++) {
     let r: WordGuessResult = {
@@ -85,15 +99,27 @@ export async function GET(request: Request) {
     };
 
     if (userWord[i] === correctWord[i]) {
+      for (let j = 0; j < response.result.length; j++) {
+        if (
+          response.result[j].letter === userWord[i] &&
+          response.result[j].color !== "green" &&
+          duplicateInWord[duplicateInWord.findIndex((d) => d.letter === userWord[i])].count === 0
+        ) {
+          response.result[j].color = "gray";
+          break;
+        }
+      }
       r.color = "green";
-      response.keyBoard?.push({ [userWord[i]]: "green" });
-    } else if (correctWord.includes(userWord[i])) {
+      duplicateInWord[duplicateInWord.findIndex((d) => d.letter === userWord[i])].count--;
+    } else if (
+      correctWord.includes(userWord[i]) &&
+      duplicateInWord[duplicateInWord.findIndex((d) => d.letter === userWord[i])].count > 0
+    ) {
       r.color = "yellow";
-      response.keyBoard?.push({ [userWord[i]]: "yellow" });
+      duplicateInWord[duplicateInWord.findIndex((d) => d.letter === userWord[i])].count--;
       corretGuess = false;
     } else {
       corretGuess = false;
-      response.keyBoard?.push({ [userWord[i]]: "gray" });
     }
 
     response.result.push(r);

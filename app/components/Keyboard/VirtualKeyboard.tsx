@@ -10,7 +10,15 @@ function createRow(
   for (let value of keys) {
     let color = "";
     if (data && data.result.length !== 0) {
-      color = data.result.find((result) => result.letter === value.toLowerCase())?.color || "";
+      for (let i = 0; i < data.result.length; i++) {
+        if (data.result[i].letter === value.toLowerCase()) {
+          if (data.result[i].color === "green") {
+            color = "green";
+            break;
+          }
+          color = data.result[i].color;
+        }
+      }
     }
     row.push(
       <div key={value}>
