@@ -1,36 +1,48 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+<img align="left" src="https://github.com/BlackyDrum/wardle/assets/111639941/1aba0e32-4f95-4f99-b7c0-cdd7f98ec0f3" />
 
-## Getting Started
 
-First, run the development server:
 
+<img src="https://github.com/BlackyDrum/wardle/assets/111639941/8bf6025f-be38-45bf-bfdd-74632a404526"></a><br /><br />
+
+**Wordle clone built with Next.js**
+
+<br />
+
+
+[![Generic badge](https://img.shields.io/badge/Status-Finished-green.svg)](https://shields.io/) [![Generic badge](https://img.shields.io/badge/License-MIT-<COLOR>.svg)](https://shields.io/) 
+ 
+<br />
+
+<img src="https://img.shields.io/badge/next%20js-000000?style=for-the-badge&logo=nextdotjs&logoColor=white"> <img src="https://img.shields.io/badge/React-20232A?style=for-the-badge&logo=react&logoColor=61DAF">
+<img src="https://img.shields.io/badge/TypeScript-007ACC?style=for-the-badge&logo=typescript&logoColor=white"> <img src="https://img.shields.io/badge/Tailwind_CSS-38B2AC?style=for-the-badge&logo=tailwind-css&logoColor=white">
+
+---
+<p>
+<b>Wardle</b> is a clone of the classic word-guessing game Wordle, where players try to guess a hidden word within a limited number of attempts.
+<b>Wardle</b> is built using <b>Next.js</b>. This project served as my introduction to <b>Next.js</b>, representing my first hands-on experience with the framework.
+</p>
+
+## Demo
+
+## Local installation
+1. **Clone the Repository:**
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+$ git clone git@github.com:BlackyDrum/wardle.git
 ```
+2. **Install Dependencies:**
+```bash
+$ npm install
+```
+3. **Start the development server**
+```bash
+$ npm run dev
+```
+4. **Open your browser and visit ``http://localhost:3000`` to play Wardle**
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## License
+This project is licensed under the **MIT License**.
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
-
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+## Acknowledgments
+- **Next.js**: https://nextjs.org/
+- **Original game by Josh Wardle**: https://www.nytimes.com/games/wordle/index.html
