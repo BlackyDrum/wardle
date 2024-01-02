@@ -80,13 +80,14 @@ export async function GET(request: Request) {
   }
 
   let duplicateInWord: DuplicateTrack[] = [];
+
   for (let i = 0; i < correctWord.length; i++) {
-    if (duplicateInWord.find((d) => d.letter === correctWord[i])) continue;
-    duplicateInWord.push({ letter: correctWord[i], count: 1 });
-    for (let j = i + 1; j < correctWord.length; j++) {
-      if (correctWord[i] === correctWord[j]) {
-        duplicateInWord[i].count++;
-      }
+    let existingDuplicate = duplicateInWord.find((d) => d.letter === correctWord[i]);
+
+    if (existingDuplicate) {
+      existingDuplicate.count++;
+    } else {
+      duplicateInWord.push({ letter: correctWord[i], count: 1 });
     }
   }
 
@@ -98,25 +99,29 @@ export async function GET(request: Request) {
       color: "gray",
     };
 
+    let index = duplicateInWord.findIndex((d) => d.letter === userWord[i]);
+
     if (userWord[i] === correctWord[i]) {
       for (let j = 0; j < response.result.length; j++) {
         if (
           response.result[j].letter === userWord[i] &&
           response.result[j].color !== "green" &&
-          duplicateInWord[duplicateInWord.findIndex((d) => d.letter === userWord[i])].count === 0
+          index !== -1 &&
+          duplicateInWord[index].count === 0
         ) {
           response.result[j].color = "gray";
           break;
         }
       }
       r.color = "green";
-      duplicateInWord[duplicateInWord.findIndex((d) => d.letter === userWord[i])].count--;
+      if (index !== -1) duplicateInWord[index].count--;
     } else if (
       correctWord.includes(userWord[i]) &&
-      duplicateInWord[duplicateInWord.findIndex((d) => d.letter === userWord[i])].count > 0
+      index !== -1 &&
+      duplicateInWord[index].count > 0
     ) {
       r.color = "yellow";
-      duplicateInWord[duplicateInWord.findIndex((d) => d.letter === userWord[i])].count--;
+      if (index !== -1) duplicateInWord[index].count--;
       corretGuess = false;
     } else {
       corretGuess = false;
