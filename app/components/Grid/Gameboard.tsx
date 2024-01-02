@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import BoardRow from "./Row/BoardRow";
 import axios from "axios";
 
@@ -29,7 +29,10 @@ export default function Gameboard() {
 
   const [apiData, setApiData] = useState<WordGuessData | null>(null);
 
+  const gameIsWon = useRef(false);
+
   const handleKeyUp = (e: KeyboardEvent) => {
+    if (gameIsWon.current) return;
     if (e.key === "Backspace") {
       setCurrentWord((prevWord) => prevWord.slice(0, -1));
     } else if (e.key.match(/[a-z]/i) && e.key.length === 1) {
@@ -38,6 +41,7 @@ export default function Gameboard() {
   };
 
   const handleClick = (value: string) => {
+    if (gameIsWon.current) return;
     if (value === "<--") {
       setCurrentWord((prevWord) => prevWord.slice(0, -1));
     } else if (value.match(/[a-z]/i) && value.length === 1) {
@@ -59,6 +63,9 @@ export default function Gameboard() {
         .get(`/api/words?word=${currentWord.toLowerCase()}`)
         .then((response) => {
           setApiData(response.data);
+          if (response.data.correctWord) {
+            gameIsWon.current = true;
+          }
         })
         .catch((error) => {
           setCurrentRow((currentRow) => currentRow - 1);
