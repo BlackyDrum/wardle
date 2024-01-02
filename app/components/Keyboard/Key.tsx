@@ -20,7 +20,7 @@ export default function Key(props: {
   return (
     <button
       onClick={() => props.handleClick(props.value)}
-      className={`w-14 h-14 max-sm:w-6 max-sm:h-6 rounded-lg bg-[#818384] font-bold sm:text-2xl ${styles[color]}`}>
+      className={`w-14 h-14 max-sm:w-7 max-sm:h-7 rounded-lg bg-[#818384] font-bold sm:text-2xl ${styles[color]}`}>
       {props.value}
     </button>
   );
