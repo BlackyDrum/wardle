@@ -48,13 +48,13 @@ export default function VirtualKeyboard(props: {
   return (
     <>
       <div className="flex justify-evenly mt-5">
-        <div className="flex gap-2 mx-auto">{topRow.map((button) => button)}</div>
+        <div className="flex gap-2 max-sm:gap-1 mx-auto">{topRow.map((button) => button)}</div>
       </div>
-      <div className="flex justify-evenly mt-3">
-        <div className="flex gap-2 mx-auto">{middleRow.map((button) => button)}</div>
+      <div className="flex justify-evenly mt-3 max-sm:mt-1">
+        <div className="flex gap-2 max-sm:gap-1 mx-auto">{middleRow.map((button) => button)}</div>
       </div>
-      <div className="flex justify-evenly mt-3">
-        <div className="flex gap-2 mx-auto">
+      <div className="flex justify-evenly mt-3 max-sm:mt-1 mb-2">
+        <div className="flex gap-2 max-sm:gap-1 mx-auto">
           {bottomRow.map((button) => button)}
           <Key value="<--" handleClick={props.handleClick} color="" />
         </div>

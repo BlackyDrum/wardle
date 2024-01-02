@@ -56,9 +56,11 @@ export default function Cell(props: {
 
   return (
     <div
-      className={`flex m-1 ${spin ? styles.spinAnimation : ""} w-16 h-16 text-3xl ${
-        enlarged ? styles.enlarged : ""
-      } ${styles[color] || "blank"} border-app-gray border-2`}>
+      className={`flex m-1 ${
+        spin ? styles.spinAnimation : ""
+      } w-16 h-16 max-sm:w-10 max-sm:h-10 text-3xl ${enlarged ? styles.enlarged : ""} ${
+        styles[color] || "blank"
+      } border-app-gray border-2`}>
       <div className="m-auto font-bold">{char}</div>
     </div>
   );
