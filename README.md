@@ -1,12 +1,11 @@
 <img align="left" src="https://github.com/BlackyDrum/wardle/assets/111639941/1aba0e32-4f95-4f99-b7c0-cdd7f98ec0f3" />
 
-<br>
 
 <img src="https://github.com/BlackyDrum/wardle/assets/111639941/8bf6025f-be38-45bf-bfdd-74632a404526"></a><br /><br />
 
 **Wordle clone built with Next.js**
 
-
+<br>
 
 
 [![Generic badge](https://img.shields.io/badge/Status-Finished-green.svg)](https://shields.io/) [![Generic badge](https://img.shields.io/badge/License-MIT-<COLOR>.svg)](https://shields.io/) 
