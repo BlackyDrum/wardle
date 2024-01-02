@@ -6,7 +6,7 @@
 
 **Wordle clone built with Next.js**
 
-<br />
+
 
 
 [![Generic badge](https://img.shields.io/badge/Status-Finished-green.svg)](https://shields.io/) [![Generic badge](https://img.shields.io/badge/License-MIT-<COLOR>.svg)](https://shields.io/) 
