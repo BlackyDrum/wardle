@@ -2,10 +2,9 @@ import { generate, count } from "random-words";
 import { promises as fs } from "fs";
 import { wordList } from "./wordsList";
 
-interface WordDataProps {
-  date: string;
-  word: string;
-}
+import { PrismaClient } from "@prisma/client";
+
+const prisma = new PrismaClient();
 
 interface WordGuessResult {
   index: number;
@@ -24,11 +23,32 @@ export interface WordGuessData {
 
 type BackgroundColor = "gray" | "yellow" | "green";
 
-async function readFile(path: string) {
-  const file = await fs.readFile(process.cwd() + path);
-  const data: WordDataProps = JSON.parse(file.toString());
+async function getData() {
+  const count = await prisma.word.count();
+  if (count === 0) {
+    const create = await prisma.word
+      .create({
+        data: {
+          createdAt: "2024-01-01",
+          word: null,
+        },
+      })
+      .then((res) => {
+        prisma.$disconnect();
+      });
+  }
 
-  return data;
+  try {
+    const word = await prisma.word.findFirst({
+      where: {
+        id: 1,
+      },
+    });
+
+    return word;
+  } finally {
+    prisma.$disconnect();
+  }
 }
 
 function createResponse(response: WordGuessData, status = 200) {
@@ -39,20 +59,33 @@ function createResponse(response: WordGuessData, status = 200) {
 }
 
 export async function GET(request: Request) {
-  let filepath = "/app/api/words/word.json";
+  let data = await getData();
 
-  let data: WordDataProps = await readFile(filepath);
-
-  if (!data.word || data.date !== new Date().toJSON().slice(0, 10)) {
-    let todayWord = generate({ minLength: 5, maxLength: 5 });
+  if (data && (!data.word || data.createdAt !== new Date().toJSON().slice(0, 10))) {
+    let todayWord = generate({ minLength: 5, maxLength: 5, exactly: 2 });
     let date = new Date().toJSON().slice(0, 10);
-    await fs.writeFile(process.cwd() + filepath, JSON.stringify({ date: date, word: todayWord }));
+
+    try {
+      data = await prisma.word.update({
+        where: {
+          id: 1,
+        },
+        data: {
+          createdAt: date,
+          word: todayWord[0],
+        },
+      });
+    } finally {
+      prisma.$disconnect();
+    }
   }
 
-  data = await readFile(filepath);
+  if (!data) {
+    return new Response("No word found!");
+  }
 
   let userWord = request.url.slice(request.url.lastIndexOf("=") + 1).toLowerCase();
-  let correctWord = data.word.toLowerCase();
+  let correctWord = data.word?.toLowerCase() || "stand"; // Default value, should never be used and cannot happen
 
   let response: WordGuessData = {
     guess: userWord,
