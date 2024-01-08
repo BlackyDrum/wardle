@@ -1,5 +1,3 @@
-import { generate, count } from "random-words";
-import { promises as fs } from "fs";
 import { wordList } from "./wordsList";
 
 import { PrismaClient } from "@prisma/client";
@@ -62,7 +60,8 @@ export async function GET(request: Request) {
   let data = await getData();
 
   if (data && (!data.word || data.createdAt !== new Date().toJSON().slice(0, 10))) {
-    let todayWord = generate({ minLength: 5, maxLength: 5, exactly: 2 });
+    let index = Math.floor(Math.random() * wordList.length);
+    let todayWord = wordList[index];
     let date = new Date().toJSON().slice(0, 10);
 
     try {
@@ -72,7 +71,7 @@ export async function GET(request: Request) {
         },
         data: {
           createdAt: date,
-          word: todayWord[0],
+          word: todayWord,
         },
       });
     } finally {
