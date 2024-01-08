@@ -14,6 +14,7 @@
 
 <img src="https://img.shields.io/badge/next%20js-000000?style=for-the-badge&logo=nextdotjs&logoColor=white"> <img src="https://img.shields.io/badge/React-20232A?style=for-the-badge&logo=react&logoColor=61DAF">
 <img src="https://img.shields.io/badge/TypeScript-007ACC?style=for-the-badge&logo=typescript&logoColor=white"> <img src="https://img.shields.io/badge/Tailwind_CSS-38B2AC?style=for-the-badge&logo=tailwind-css&logoColor=white">
+<img src="https://img.shields.io/badge/PostgreSQL-316192?style=for-the-badge&logo=postgresql&logoColor=white">
 
 ---
 <p>
@@ -33,11 +34,20 @@ $ git clone git@github.com:BlackyDrum/wardle.git
 ```bash
 $ npm install
 ```
-3. **Start the development server**
+3. **Copy the ``.env.example`` file to ``.env`` and provide your PostgreSQL database credentials**
+4. **Run Prisma migrations to create database tables:**
+```
+$ npm prisma migrate
+```
+5 **Generate the Prisma Client:**
+```
+$ npx prisma generate
+```
+6. **Start the development server**
 ```bash
 $ npm run dev
 ```
-4. **Open your browser and visit ``http://localhost:3000`` to play Wardle**
+7. **Open your browser and visit ``http://localhost:3000`` to play Wardle**
 
 
 ## License
