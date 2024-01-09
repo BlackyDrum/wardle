@@ -39,7 +39,7 @@ $ npm install
 ```
 $ npx prisma migrate
 ```
-5 **Generate the Prisma Client:**
+5. **Generate the Prisma Client:**
 ```
 $ npx prisma generate
 ```
