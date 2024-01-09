@@ -37,7 +37,7 @@ $ npm install
 3. **Copy the ``.env.example`` file to ``.env`` and provide your PostgreSQL database credentials**
 4. **Run Prisma migrations to create database tables:**
 ```
-$ npm prisma migrate
+$ npx prisma migrate
 ```
 5 **Generate the Prisma Client:**
 ```
