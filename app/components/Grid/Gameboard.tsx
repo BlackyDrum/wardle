@@ -27,38 +27,64 @@ export default function Gameboard() {
 
   const [currentRow, setCurrentRow] = useState(0);
 
+  const [enterPressed, setEnterPressed] = useState(false);
+
   const [apiData, setApiData] = useState<WordGuessData | null>(null);
 
   const gameIsWon = useRef(false);
 
+  const isValidating = useRef(false);
+
   const handleKeyUp = (e: KeyboardEvent) => {
-    if (gameIsWon.current) return;
+    if (gameIsWon.current || isValidating.current) return;
     if (e.key === "Backspace") {
       setCurrentWord((prevWord) => prevWord.slice(0, -1));
     } else if (e.key.match(/[a-z]/i) && e.key.length === 1) {
-      setCurrentWord((prevWord) => prevWord + e.key);
+      setCurrentWord((prevWord) => (prevWord.length < 5 ? prevWord + e.key : prevWord));
+    }
+  };
+
+  const handleEnterDown = (e: KeyboardEvent) => {
+    if (e.key === "Enter") {
+      setEnterPressed(true);
+    }
+  };
+
+  const handleEnterUp = (e: KeyboardEvent) => {
+    if (e.key === "Enter") {
+      setEnterPressed(false);
     }
   };
 
   const handleClick = (value: string) => {
-    if (gameIsWon.current) return;
+    if (gameIsWon.current || isValidating.current) return;
     if (value === "<--") {
       setCurrentWord((prevWord) => prevWord.slice(0, -1));
+    } else if (value === "Enter") {
+      setEnterPressed(true);
+      setTimeout(() => {
+        setEnterPressed(false);
+      }, 100);
     } else if (value.match(/[a-z]/i) && value.length === 1) {
-      setCurrentWord((prevWord) => prevWord + value);
+      setCurrentWord((prevWord) => (prevWord.length < 5 ? prevWord + value : prevWord));
     }
   };
 
   useEffect(() => {
     document.addEventListener("keyup", handleKeyUp);
+    document.addEventListener("keydown", handleEnterDown);
+    document.addEventListener("keyup", handleEnterUp);
 
     return () => {
       document.removeEventListener("keyup", handleKeyUp);
+      document.removeEventListener("keydown", handleEnterDown);
+      document.removeEventListener("keyup", handleEnterUp);
     };
   }, []);
 
   useEffect(() => {
-    if (currentWord.length === 5) {
+    if (currentWord.length === 5 && enterPressed) {
+      isValidating.current = true;
       axios
         .get(`/api/words?word=${currentWord.toLowerCase()}`)
         .then((response) => {
@@ -78,9 +104,11 @@ export default function Gameboard() {
         .finally(() => {
           setCurrentRow((currentRow) => currentRow + 1);
           setCurrentWord("");
+
+          isValidating.current = false;
         });
     }
-  }, [currentWord]);
+  }, [currentWord, enterPressed]);
 
   let rows = createBoard(currentWord, currentRow, apiData);
 

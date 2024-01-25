@@ -43,7 +43,11 @@ export default function VirtualKeyboard(props: {
     props.handleClick,
     props.data
   );
-  const bottomRow = createRow(["Y", "X", "C", "V", "B", "N", "M"], props.handleClick, props.data);
+  const bottomRow = createRow(
+    ["Enter", "Y", "X", "C", "V", "B", "N", "M"],
+    props.handleClick,
+    props.data
+  );
 
   return (
     <>
