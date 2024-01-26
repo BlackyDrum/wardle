@@ -11,7 +11,8 @@ import VirtualKeyboard from "../Keyboard/VirtualKeyboard";
 
 function createBoard(currentWord: string, currentRow: number, data: WordGuessData | null) {
   let rows = [];
-  for (let i = 0; i < 6; i++) {
+  const guessTries = process.env.GUESS_TRIES || "6";
+  for (let i = 0; i < Number.parseInt(guessTries); i++) {
     rows.push(
       <div>
         <BoardRow word={currentWord} row={currentRow} cellRow={i} data={data} />
@@ -33,10 +34,14 @@ export default function Gameboard() {
 
   const gameIsWon = useRef(false);
 
+  const gameIsLost = useRef(false);
+
   const isValidating = useRef(false);
 
+  const guessTries = process.env.GUESS_TRIES || "6";
+
   const handleKeyUp = (e: KeyboardEvent) => {
-    if (gameIsWon.current || isValidating.current) return;
+    if (gameIsWon.current || gameIsLost.current || isValidating.current) return;
     if (e.key === "Backspace") {
       setCurrentWord((prevWord) => prevWord.slice(0, -1));
     } else if (e.key.match(/[a-z]/i) && e.key.length === 1) {
@@ -57,7 +62,7 @@ export default function Gameboard() {
   };
 
   const handleClick = (value: string) => {
-    if (gameIsWon.current || isValidating.current) return;
+    if (gameIsWon.current || gameIsLost.current || isValidating.current) return;
     if (value === "<--") {
       setCurrentWord((prevWord) => prevWord.slice(0, -1));
     } else if (value === "Enter") {
@@ -81,6 +86,12 @@ export default function Gameboard() {
       document.removeEventListener("keyup", handleEnterUp);
     };
   }, []);
+
+  useEffect(() => {
+    if (currentRow === Number.parseInt(guessTries) && !gameIsWon.current) {
+      gameIsLost.current = true;
+    }
+  }, [currentRow, guessTries]);
 
   useEffect(() => {
     if (currentWord.length === 5 && enterPressed) {
